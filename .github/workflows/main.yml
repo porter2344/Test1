@@ -6,8 +6,8 @@ permissions:
   discussions: write
 
 env:
-  PROJECT_NAME: PsychOnline
-  REPO_PATH: MobilePorting/Funkin-Psych-Online-Mobile
+  PROJECT_NAME: PsychEngine
+  REPO_PATH: MobilePorting/FNF-PsychEngine-Mobile
 
 jobs:
   get-commit-hash:
@@ -25,12 +25,14 @@ jobs:
           else
             echo "Seems to be correct..."
           fi
+
       - name: Get latest commit hash
         id: get_commit_hash
         run: |
           commit_hash=${GITHUB_SHA::7}
           echo "Latest commit hash is $commit_hash"
           echo "::set-output name=COMMIT_HASH::$commit_hash"
+
   build:
     name: ${{ matrix.name }}
     needs: get-commit-hash
@@ -40,10 +42,12 @@ jobs:
           - name: Android
             os: macos-15
             buildArgs: "android -final -D officialBuild"
+            setupCommand: sh ./setup/mobile.sh
             artifactName: androidBuild
             artifactPath: "export/release/android/bin/app/build/outputs/apk/release/*.apk"
           - name: iOS
             os: macos-15
+            setupCommand: sh ./setup/mobile.sh
             buildArgs: "ios -final -nosign -D officialBuild"
             artifactName: iOSBuild
             artifactPath: "export/release/ios/build/Release-iphoneos/*.ipa"
@@ -51,6 +55,7 @@ jobs:
     with:
         name: ${{ matrix.name }}
         os: ${{ matrix.os }}
+        setupCommand: ${{ matrix.setupCommand }}
         buildArgs: ${{ matrix.buildArgs }}
         artifactName: ${{ matrix.artifactName }}
         artifactPath: ${{ matrix.artifactPath }}
@@ -79,7 +84,11 @@ jobs:
         run: zip -r /home/runner/${{ env.PROJECT_NAME }}-iOS.zip ${{ github.workspace }}/${{ env.PROJECT_NAME }}.ipa
 
       - name: Publish The Release
-        uses: softprops/action-gh-release@master
+        uses: softprops/action-gh-release@v2
         with:
           name: "DevBuild ${{ needs.get-commit-hash.outputs.commit_hash }}"
-          tag_name: "devbuild
+          tag_name: "devbuild-${{ needs.get-commit-hash.outputs.commit_hash }}"
+          prerelease: true
+          files: |
+            /home/runner/*.apk
+            /home/runner/*.zip
