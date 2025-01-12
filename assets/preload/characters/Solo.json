@@ -1,0 +1,78 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				278,
+				-31
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "Right Normal instance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				76,
+				-46
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "Down Normal instance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				92,
+				-35
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "Left instance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				118,
+				71
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "Up Normal instance",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "Idle Normal instance",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/Bendy503Games",
+	"position": [
+		310,
+		230
+	],
+	"healthicon": "bendy",
+	"flip_x": true,
+	"healthbar_colors": [
+		181,
+		145,
+		36
+	],
+	"camera_position": [
+		-420,
+		30
+	],
+	"sing_duration": 4,
+	"scale": 1.2
+}
